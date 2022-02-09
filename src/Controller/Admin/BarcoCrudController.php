@@ -27,23 +27,35 @@ class BarcoCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('Nombre'),
-            TextField::new('Matricula'),
-            NumberField::new('Pasajeros_Maximos'),
-            NumberField::new('Precio_Con_Patron'),
-            NumberField::new('Precio_Sin_Patron'),
-            NumberField::new('Eslora'),
-            NumberField::new('Calado'),
-            NumberField::new('Caballos'),
-            TextField::new('Licencia'),
-            NumberField::new('Latitud'),
-            NumberField::new('Longitud'),
-            BooleanField::new('Patron'),
+            TextField::new('Nombre')
+            ->setRequired(true),
+            TextField::new('Matricula')
+            ->setRequired(true),
+            NumberField::new('Pasajeros_Maximos')
+            ->setRequired(true),
+            NumberField::new('Precio_Con_Patron')
+            ->setRequired(true),
+            NumberField::new('Precio_Sin_Patron')
+            ->setRequired(true),
+            NumberField::new('Eslora')
+            ->setRequired(true),
+            NumberField::new('Calado')
+            ->setRequired(true),
+            NumberField::new('Caballos')
+            ->setRequired(true),
+            TextField::new('Licencia')
+            ->setRequired(true),
+            NumberField::new('Latitud')
+            ->setRequired(true),
+            NumberField::new('Longitud')
+            ->setRequired(true),
             ImageField::new('Imagenes')
             ->setBasePath('uploads/')
             ->setUploadDir('public/uploads')
             ->setUploadedFileNamePattern('[randomhash].[extension]')
-            ->setRequired(false),
+            ->setRequired(true),
+            BooleanField::new('Patron')
+            ->setRequired(true),
         ];
     }
     
