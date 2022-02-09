@@ -39,7 +39,7 @@
 											<a href="testimonials.html" class="nav-link text-left">Valoraciones</a>
 										</li>
 										<li>
-											<a href="about.html" class="nav-link text-left">Sobre Nosotros</a>
+											<a href="{{ path('about')}}" class="nav-link text-left">Sobre Nosotros</a>
 										</li>
 										{% if is_granted('ROLE_USER') %}
 										<li>
@@ -83,71 +83,39 @@
 				<div class="row">
 					<div class="col-lg-3">
 						<p class="mb-4"><img src="images/logo.png" alt="Image" class="img-fluid"></p>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae nemo minima qui dolor, iusto iure.</p>
+						<p>La mejor web para alquier de barcos y yates que encontrarás en Internet</p>
 						<p>
-							<a href="#">Learn More</a>
+							<a href="#">Leer más acerca de la web</a>
 						</p>
 					</div>
 					<div class="col-lg-3">
 						<h3 class="footer-heading">
-							<span>Our Company</span>
+							<span>Nuestra empresa</span>
 						</h3>
 						<ul class="list-unstyled">
 							<li>
-								<a href="#">About</a>
+								<a href="#">Sobre nosotros</a>
 							</li>
 							<li>
-								<a href="#">News</a>
+								<a href="#">Noticias</a>
 							</li>
 							<li>
-								<a href="#">Services</a>
-							</li>
-							<li>
-								<a href="#">Our Team</a>
-							</li>
-							<li>
-								<a href="#">Careers</a>
-							</li>
-							<li>
-								<a href="#">Projects</a>
+								<a href="#team">Nuestro equipo</a>
 							</li>
 						</ul>
 					</div>
 					<div class="col-lg-3">
 						<h3 class="footer-heading">
-							<span>Our Services</span>
+							<span>Contacto</span>
 						</h3>
 						<ul class="list-unstyled">
 							<li>
-								<a href="#">Industrial</a>
+								<a href="#">Centro de Ayuda</a>
 							</li>
 							<li>
-								<a href="#">Construction</a>
+								<a href="#">Comunidad</a>
 							</li>
-							<li>
-								<a href="#">Remodeling</a>
-							</li>
-						</ul>
-					</div>
-					<div class="col-lg-3">
-						<h3 class="footer-heading">
-							<span>Contact</span>
-						</h3>
-						<ul class="list-unstyled">
-							<li>
-								<a href="#">Help Center</a>
-							</li>
-							<li>
-								<a href="#">Support Community</a>
-							</li>
-							<li>
-								<a href="#">Press</a>
-							</li>
-							<li>
 								<a href="#">FAQ</a>
-							</li>
-							<li>
-								<a href="#">Our Partners</a>
 							</li>
 						</ul>
 					</div>
@@ -157,15 +125,13 @@
 					<div class="col-12">
 						<div class="copyright">
 							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 								Copyright &copy;<script>
 									document.write(new Date().getFullYear());
 								</script>
 								All rights reserved | This template is made with
 								<i class="icon-heart text-danger" aria-hidden="true"></i>
 								by
-								<a href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+								<a href="https://colorlib.com" target="_blank">Jose Luis Berrio Sanchez</a>
 							</p>
 						</div>
 					</div>

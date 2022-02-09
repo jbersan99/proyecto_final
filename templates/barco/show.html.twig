@@ -96,17 +96,17 @@
 							<div class="mx-auto">
 								<nav class="site-navigation position-relative text-right" role="navigation">
 									<ul class="site-menu main-menu js-clone-nav mr-auto d-none pl-0 d-lg-block">
-										<li class="active">
+										<li>
 											<a href="{{ path('barco')}}" class="nav-link text-left">Inicio</a>
 										</li>
-										<li>
+										<li class="active">
 											<a href="{{ path('show_barcos')}}" class="nav-link text-left">Nuestra Flota</a>
 										</li>
 										<li>
 											<a href="testimonials.html" class="nav-link text-left">Valoraciones</a>
 										</li>
 										<li>
-											<a href="about.html" class="nav-link text-left">Sobre Nosotros</a>
+											<a href="{{ path('about')}}" class="nav-link text-left">Sobre Nosotros</a>
 										</li>
 										{% if is_granted('ROLE_USER') %}
 										<li>
@@ -143,19 +143,19 @@
 					</div>
 				</div>
                 <div class="row">
-                {% for barco in barcos %}
+					{% for barco in barcos %}
 					<div class="col-md-6 col-lg-4 mb-4">
 						<div class="service-39381">
-							<img src="images/hero_1.jpg" alt="Image" class="img-fluid">
+							<img src="{{ barco.getImagenes }}" alt="Image" class="img-fluid">
 							<div class="p-4">
 								<h3>
-									<a href="#">
-										<span class="icon-room mr-1 text-primary"></span>
+									<a href="{{ path('barco_info', {'id': barco.id}) }}">
+										<i class="fa-solid fa-ship"></i>
 										{{ barco.nombre }} &mdash; {{ barco.matricula }}</a>
 								</h3>
 								<div class="d-flex">
 									<div class="mr-auto">
-										<span class="icon-date_range"></span>
+										<i class="fa-solid fa-person"></i>
 										Pasajeros Maximos
 									</div>
 									<div class="ml-auto price">
@@ -165,7 +165,7 @@
 								</div>
                                 <div class="d-flex">
 									<div class="mr-auto">
-										<span class="icon-date_range"></span>
+										<i class="fa-solid fa-money-bill-wave"></i>
 										Precio con patron
 									</div>
 									<div class="ml-auto price">
@@ -177,7 +177,8 @@
 						</div>
 					</div>
                 {% endfor %}
-                </div>	
+
+				</div>	
 		</div>
 
 

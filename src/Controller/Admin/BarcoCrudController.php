@@ -55,7 +55,7 @@ class BarcoCrudController extends AbstractCrudController
             ->setUploadedFileNamePattern('[randomhash].[extension]')
             ->setRequired(true),
             BooleanField::new('Patron')
-            ->setRequired(true),
+            ->setRequired(false),
         ];
     }
     

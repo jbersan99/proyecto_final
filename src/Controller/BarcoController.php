@@ -18,9 +18,14 @@ class BarcoController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         $barcos = $doctrine->getRepository(Barco::class)->findAll();
+        $patrones = 0;
+        foreach($barcos as $barco){
+            $patrones == $barco->getLicencia();
+        }
 
         return $this->render('barco/index.html.twig', [
             'barcos' => $barcos,
+            'patrones' => $patrones,
             'controller_name' => 'BarcoController',
         ]);
     }

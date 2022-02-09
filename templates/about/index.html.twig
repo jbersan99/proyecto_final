@@ -134,53 +134,6 @@
 
 		</div>
 
-		<div class="site-section bg-light">
-			<div class="container">
-				<div class="row justify-content-center mb-5">
-					<div class="col-md-7 text-center">
-						<span class="text-serif text-primary">Listado</span>
-						<h3 class="heading-92913 text-black text-center">Yates</h3>
-					</div>
-				</div>
-                <div class="row">
-                {% for barco in barcos %}
-					<div class="col-md-6 col-lg-4 mb-4">
-						<div class="service-39381">
-							<img src="images/hero_1.jpg" alt="Image" class="img-fluid">
-							<div class="p-4">
-								<h3>
-									<a href="#">
-										<span class="icon-room mr-1 text-primary"></span>
-										{{ barco.nombre }} &mdash; {{ barco.matricula }}</a>
-								</h3>
-								<div class="d-flex">
-									<div class="mr-auto">
-										<span class="icon-date_range"></span>
-										Pasajeros Maximos
-									</div>
-									<div class="ml-auto price">
-										<span class="bg-primary">{{ barco.getPasajerosMaximos }} max</span>
-									</div>
-
-								</div>
-                                <div class="d-flex">
-									<div class="mr-auto">
-										<span class="icon-date_range"></span>
-										Precio con patron
-									</div>
-									<div class="ml-auto price">
-										<span class="bg-primary">{{ barco.getPrecioConPatron }} €</span>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-                {% endfor %}
-                </div>	
-		</div>
-
-
 		<div class="site-section bg-image overlay" style="background-image: url('images/hero_2.jpg');">
 			<div class="container">
 				<div class="row justify-content-center">

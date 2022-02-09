@@ -92,7 +92,7 @@
 											<a href="testimonials.html" class="nav-link text-left">Valoraciones</a>
 										</li>
 										<li>
-											<a href="about.html" class="nav-link text-left">Sobre Nosotros</a>
+											<a href="{{ path('about')}}" class="nav-link text-left">Sobre Nosotros</a>
 										</li>
 										{% if is_granted('ROLE_USER') %}
 										<li>
@@ -224,7 +224,9 @@
 				<div class="row">
 					<div class="col">
 						<div class="counter-39392">
-							<h3>X</h3>
+							{% set yates = 0 %}
+							{% for barco in barcos %} {% set yates = yates + 1 %} {% endfor %}
+							<h3>{{yates}}</h3>
 							<span>Numero de yates/barcos</span>
 						</div>
 					</div>
@@ -236,14 +238,10 @@
 					</div>
 					<div class="col">
 						<div class="counter-39392">
-							<h3>X</h3>
+							{% set patrones = 0 %}
+							{% for barco in barcos %} {% if barco.patron == 1 %} {% set patrones = patrones + 1 %} {% endif %}{% endfor %}
+							<h3>{{patrones}}</h3>
 							<span>Numero de patrones</span>
-						</div>
-					</div>
-					<div class="col">
-						<div class="counter-39392">
-							<h3>X</h3>
-							<span>Destinos</span>
 						</div>
 					</div>
 					<div class="col">
@@ -268,16 +266,16 @@
 					{% for barco in barcos %}
 					<div class="col-md-6 col-lg-4 mb-4">
 						<div class="service-39381">
-							<img src="images/hero_1.jpg" alt="Image" class="img-fluid">
+							<img src="{{ barco.getImagenes }}" alt="Image" class="img-fluid">
 							<div class="p-4">
 								<h3>
 									<a href="{{ path('barco_info', {'id': barco.id}) }}">
-										<span class="icon-room mr-1 text-primary"></span>
+										<i class="fa-solid fa-ship"></i>
 										{{ barco.nombre }} &mdash; {{ barco.matricula }}</a>
 								</h3>
 								<div class="d-flex">
 									<div class="mr-auto">
-										<span class="icon-date_range"></span>
+										<i class="fa-solid fa-person"></i>
 										Pasajeros Maximos
 									</div>
 									<div class="ml-auto price">
@@ -287,7 +285,7 @@
 								</div>
                                 <div class="d-flex">
 									<div class="mr-auto">
-										<span class="icon-date_range"></span>
+										<i class="fa-solid fa-money-bill-wave"></i>
 										Precio con patron
 									</div>
 									<div class="ml-auto price">
@@ -569,4 +567,6 @@
 <script src="js/jquery.fancybox.min.js"></script>
 <script src="js/jquery.sticky.js"></script>
 <script src="js/jquery.mb.YTPlayer.min.js"></script>
-<script src="js/main.js"></script>{% endblock %}
+<script src="js/main.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
