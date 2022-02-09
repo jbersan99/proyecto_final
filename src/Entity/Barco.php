@@ -84,6 +84,11 @@ class Barco
      */
     private $reservas;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $imagenes;
+
 
     public function __construct()
     {
@@ -266,6 +271,18 @@ class Barco
                 $reserva->setBarcoReserva(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImagenes(): ?string
+    {
+        return $this->imagenes;
+    }
+
+    public function setImagenes(string $imagenes): self
+    {
+        $this->imagenes = $imagenes;
 
         return $this;
     }
