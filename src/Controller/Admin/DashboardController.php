@@ -17,7 +17,13 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return parent::index();
+        }if ($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('barco');
+        }else{
+            return $this->redirectToRoute('barco');
+        }
     }
 
     public function configureDashboard(): Dashboard
@@ -31,7 +37,6 @@ class DashboardController extends AbstractDashboardController
             ->renderSidebarMinimized()
             ->disableUrlSignatures()
             ->generateRelativeUrls();
-
     }
 
     public function configureMenuItems(): iterable

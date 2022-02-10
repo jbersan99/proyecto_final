@@ -96,7 +96,7 @@
 							<div class="mx-auto">
 								<nav class="site-navigation position-relative text-right" role="navigation">
 									<ul class="site-menu main-menu js-clone-nav mr-auto d-none pl-0 d-lg-block">
-										<li class="active">
+										<li>
 											<a href="{{ path('barco')}}" class="nav-link text-left">Inicio</a>
 										</li>
 										<li>
@@ -105,7 +105,7 @@
 										<li>
 											<a href="testimonials.html" class="nav-link text-left">Valoraciones</a>
 										</li>
-										<li>
+										<li class="active">
 											<a href="about.html" class="nav-link text-left">Sobre Nosotros</a>
 										</li>
 										{% if is_granted('ROLE_USER') %}

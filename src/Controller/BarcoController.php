@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Barco;
 use App\Form\BarcoType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class BarcoController extends AbstractController
 {
@@ -53,6 +54,33 @@ class BarcoController extends AbstractController
             'barco' => $barco,
         ));
     }
+
+
+    /**
+     * @Route("/barco_api_info/{id}", name="barco_info", methods={"GET"})
+     */
+    public function api_info(ManagerRegistry $doctrine, int $id): JsonResponse
+    {
+        $barco = $doctrine->getRepository(Barco::class)->find($id);
+
+        $data = [
+            'Nombre' => $barco->getNombre(),
+            'Matricula' => $barco->getMatricula(),
+            'Pasajeros' => $barco->getPasajeros(),
+            'Precio con Patron' => $barco->getPrecioConPatron(),
+            'Precio sin Patron' => $barco->getPrecioSinPatron(),
+            'Eslora' => $barco->getEslora(),
+            'Calado' => $barco->getCalado(),
+            'Caballos' => $barco->getCaballos(),
+            'Licencia' => $barco->getLicencia(),
+            'Latitud' => $barco->getLatitud(),
+            'Longitud' => $barco->getLongitud(),
+            'Patrón' => $barco->getPatron()
+        ];
+
+        return new JsonResponse($data, Response::HTTP_OK);
+    }
+    
 
     /**
      * @Route("/new_barco", name="new_barco")

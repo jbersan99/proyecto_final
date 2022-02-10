@@ -51,9 +51,8 @@
 				<div class="container">
 					<div class="row align-items-center">
 						<div class="col-6 col-lg-3">
-							<a href="index.html">
-								<img
-								src="/images/logo.png" alt="Image" class="img-fluid">
+							<a href="{{ path('barco')}}">
+								<img src="{{ asset('images/logo.png') }}" alt="Image" class="img-fluid">
 							<!-- <strong>Water</strong>Boat -->
 							</a>
 						</div>
@@ -124,7 +123,7 @@
 									<div class="mx-auto">
 										<nav class="site-navigation position-relative text-right" role="navigation">
 											<ul class="site-menu main-menu js-clone-nav mr-auto d-none pl-0 d-lg-block">
-												<li class="active">
+												<li>
 													<a href="{{ path('barco')}}" class="nav-link text-left">Inicio</a>
 												</li>
 												<li>
