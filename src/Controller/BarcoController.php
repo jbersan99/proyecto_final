@@ -10,9 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Barco;
 use App\Form\BarcoType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 class BarcoController extends AbstractController
 {
+    
     /**
      * @Route("/barco", name="barco")
      */
@@ -57,7 +59,7 @@ class BarcoController extends AbstractController
 
 
     /**
-     * @Route("/barco_api_info/{id}", name="barco_info", methods={"GET"})
+     * @Route("/barco_api_info/{id}", name="barco_api_info", methods={"GET"})
      */
     public function api_info(ManagerRegistry $doctrine, int $id): JsonResponse
     {
@@ -66,7 +68,7 @@ class BarcoController extends AbstractController
         $data = [
             'Nombre' => $barco->getNombre(),
             'Matricula' => $barco->getMatricula(),
-            'Pasajeros' => $barco->getPasajeros(),
+            'Pasajeros' => $barco->getPasajerosMaximos(),
             'Precio con Patron' => $barco->getPrecioConPatron(),
             'Precio sin Patron' => $barco->getPrecioSinPatron(),
             'Eslora' => $barco->getEslora(),

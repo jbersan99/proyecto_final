@@ -40,6 +40,8 @@ class BarcoCrudController extends AbstractCrudController
             ->setRequired(true),
             NumberField::new('Calado')
             ->setRequired(true),
+            NumberField::new('Cubierta')
+            ->setRequired(true),
             NumberField::new('Caballos')
             ->setRequired(true),
             TextField::new('Licencia')

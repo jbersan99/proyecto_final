@@ -161,30 +161,35 @@
 
 				</div>
 
-				<div class="site-section bg-light">
+			<div class="site-section">
 					<div class="container">
-						<span class="icon-room mr-1 text-primary"></span> 
-                        {{ barco.nombre }}
-						&mdash; {{ barco.matricula }}
-                        {{ barco.getPasajerosMaximos }}
-                        {{ barco.getPrecioConPatron }}
-                        {{ barco.getPrecioSinPatron }}
-                        {{ barco.eslora }}
-                        {{ barco.calado }}
-                        {{ barco.caballos }}
-                        {{ barco.licencia }}
-                        {{ barco.latitud }}
-                        {{ barco.longitud }}
-                    
-						
+						<div class="row">
+							<div class="col-md-6">
+								<h1 class="text-black"> <i class="fa-solid fa-ship text-black" ></i> {{ barco.nombre }} &mdash; {{ barco.matricula }} </h1>
+
+                        {% set imagePath = 'uploads/' ~ barco.imagenes %}
+						<img id="previewHolder" width="100%" height="100%" src="{{ asset( imagePath ) }}"  alt="Image" class="img-fluid"/>
+							</div>
+							<div class="col-md-6">
+								<h2 class="heading-92913 text-black">Informacion sobre el barco</h2>
+								<h3> Pasajeros Maximos Permitidos: {{ barco.getPasajerosMaximos }} <i class="fa-solid fa-person"></i> </h3>
+                        		<h3> Precio Con Patron de Barco: {{ barco.getPrecioConPatron }} <i class="fa-solid fa-money-bill-wave"></i> </h3>
+								<h3> Precio Sin Patron de Barco: {{ barco.getPrecioSinPatron }} <i class="fa-solid fa-money-bill-wave"></i> </h3>
+								<h3> Eslora: {{ barco.eslora }} <i class="fa-solid fa-arrows-up-down"></i> </h3>
+								<h3> Calado: {{ barco.calado }}  <i class="fa-solid fa-arrow-down"></i> </h3>
+								<h3> Cubierta: {{ barco.cubierta }} <i class="fa-solid fa-arrows-left-right"></i> </h3>
+								<h3> Caballos: {{ barco.caballos }} <i class="fa-solid fa-gauge"></i> </h3>
+								<h3> Licencia Requerida: {{ barco.licencia }} <i class="fa-solid fa-id-badge"></i> </h3>
+							</div>
+						</div>
 					</div>
+				</div>
 
-
-					<div class="footer bg-light">
+		<div class="footer bg-light">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-3">
-						<p class="mb-4"><img src="images/logo.png" alt="Image" class="img-fluid"></p>
+						<p class="mb-4"><img src="{{ asset('images/logo.png') }}" alt="Image" class="img-fluid"></p>
 						<p>La mejor web para alquier de barcos y yates que encontrarás en Internet</p>
 						<p>
 							<a href="#">Leer más acerca de la web</a>
@@ -265,6 +270,7 @@
 			<script src="/js/jquery.sticky.js"></script>
 			<script src="/js/jquery.mb.YTPlayer.min.js"></script>
 			<script src="/js/main.js"></script>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		{% endblock %}
 	</body>
 </html>

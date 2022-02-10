@@ -6,9 +6,11 @@ use App\Repository\BarcoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=BarcoRepository::class)
+ * @ApiResource()
  */
 class Barco
 {
@@ -88,6 +90,11 @@ class Barco
      * @ORM\Column(type="string", length=255)
      */
     private $imagenes;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $cubierta;
 
 
     public function __construct()
@@ -283,6 +290,18 @@ class Barco
     public function setImagenes(string $imagenes): self
     {
         $this->imagenes = $imagenes;
+
+        return $this;
+    }
+
+    public function getCubierta(): ?int
+    {
+        return $this->cubierta;
+    }
+
+    public function setCubierta(int $cubierta): self
+    {
+        $this->cubierta = $cubierta;
 
         return $this;
     }
