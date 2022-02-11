@@ -73,6 +73,7 @@ class BarcoController extends AbstractController
             'Precio sin Patron' => $barco->getPrecioSinPatron(),
             'Eslora' => $barco->getEslora(),
             'Calado' => $barco->getCalado(),
+            'Cubierta' => $barco->getCubierta(),
             'Caballos' => $barco->getCaballos(),
             'Licencia' => $barco->getLicencia(),
             'Latitud' => $barco->getLatitud(),

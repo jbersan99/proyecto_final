@@ -59,6 +59,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $tipo_licencia;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
     public function __construct()
     {
         $this->reservas_usuario = new ArrayCollection();
@@ -215,6 +220,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTipoLicencia(?string $tipo_licencia): self
     {
         $this->tipo_licencia = $tipo_licencia;
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

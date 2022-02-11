@@ -36,6 +36,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    protected function getDefaults(): array
+    {
+        return [
+            'isVerified' => true,
+        ];
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
