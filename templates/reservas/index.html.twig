@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	<script>
+		$('.js-datepicker').datepicker({format: 'yyyy-mm', minViewMode: 1, autoclose: true});
+	</script>
+{% endblock %}
+
+{% block body %}
+	<div class="container"> {{form(form)}}
+		</div>
+	{% endblock %}

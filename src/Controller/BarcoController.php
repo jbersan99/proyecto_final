@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Barco;
 use App\Form\BarcoType;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use ApiPlatform\Core\Annotation\ApiResource;
 
 class BarcoController extends AbstractController
 {

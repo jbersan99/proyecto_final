@@ -180,6 +180,9 @@
 								<h3> Cubierta: {{ barco.cubierta }} <i class="fa-solid fa-arrows-left-right"></i> </h3>
 								<h3> Caballos: {{ barco.caballos }} <i class="fa-solid fa-gauge"></i> </h3>
 								<h3> Licencia Requerida: {{ barco.licencia }} <i class="fa-solid fa-id-badge"></i> </h3>
+								<p>
+									<a href="{{ path('reservas', {'id': barco.id}) }}" class="btn btn-primary py-3 px-5">Reservar Embarcación</a>
+								</p>
 							</div>
 						</div>
 					</div>

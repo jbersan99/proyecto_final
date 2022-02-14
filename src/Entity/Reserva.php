@@ -23,9 +23,9 @@ class Reserva
     private $fecha_inicio;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="integer")
      */
-    private $fecha_fin;
+    private $dias_reservados;
 
     /**
      * @ORM\Column(type="integer")
@@ -76,14 +76,14 @@ class Reserva
         return $this;
     }
 
-    public function getFechaFin(): ?\DateTimeInterface
+    public function getDiasReservados(): ?int
     {
-        return $this->fecha_fin;
+        return $this->dias_reservados;
     }
 
-    public function setFechaFin(\DateTimeInterface $fecha_fin): self
+    public function setDiasReservados(int $dias_reservados): self
     {
-        $this->fecha_fin = $fecha_fin;
+        $this->dias_reservados = $dias_reservados;
 
         return $this;
     }
