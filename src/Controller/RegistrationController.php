@@ -48,13 +48,13 @@ class RegistrationController extends AbstractController
             $email = (new Email())
                 ->from('correosymfony@gmail.com')
                 ->to($user->getEmail())
-                ->subject('Welcome to the Space Bar!')
-                ->text("Nice to meet you {$user->getNombre()}! ❤️
-                Confirm your email at: ' . {$signatureComponents->getSignedUrl()}");
+                ->subject('¡Bienvenido a WaterBoat!')
+                ->text("Encantado de conocerte {$user->getNombre()}! ❤️
+                Confirma tu cuenta desde el siguiente enlace: ' . {$signatureComponents->getSignedUrl()}");
 
             $mailer->send($email);
 
-            $this->addFlash('success', 'Confirm your email at: ' . $signatureComponents->getSignedUrl());
+            $this->addFlash('success', 'Confirma tu cuenta desde el correo electronico');
             return $this->redirectToRoute('barco');
         }
 
@@ -86,7 +86,7 @@ class RegistrationController extends AbstractController
         $user->setIsVerified(true);
 
         $entityManager->flush();
-        $this->addFlash('success', 'Account Verified! You can now log in.');
+        $this->addFlash('success', 'Cuenta verificada! Logueate para disfrutar de los servicios que ofrecemos.');
         return $this->redirectToRoute('login');
 
         dd('TODO');
