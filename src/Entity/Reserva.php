@@ -23,17 +23,17 @@ class Reserva
     private $fecha_inicio;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="date")
      */
-    private $dias_reservados;
+    private $fecha_fin;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $precio_total;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $creacion_reserva;
 
@@ -49,13 +49,13 @@ class Reserva
 
     /**
      * @ORM\ManyToOne(targetEntity=Barco::class, inversedBy="reservas")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $barco_reserva;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservas_usuario")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $usuario_reserva;
 
@@ -76,14 +76,14 @@ class Reserva
         return $this;
     }
 
-    public function getDiasReservados(): ?int
+    public function getFechaFin(): ?\DateTimeInterface
     {
-        return $this->dias_reservados;
+        return $this->fecha_fin;
     }
 
-    public function setDiasReservados(int $dias_reservados): self
+    public function setFechaFin(\DateTimeInterface $fecha_fin): self
     {
-        $this->dias_reservados = $dias_reservados;
+        $this->fecha_fin = $fecha_fin;
 
         return $this;
     }
@@ -159,4 +159,5 @@ class Reserva
 
         return $this;
     }
+
 }

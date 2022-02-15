@@ -2,11 +2,38 @@
 
 {% block javascripts %}
 	<script>
-		$('.js-datepicker').datepicker({format: 'yyyy-mm', minViewMode: 1, autoclose: true});
+		//AJAX CON JQUERY
+		$(document).ready(function () {
+		$".reservas_Reservar").click(function()
+		{
+			var fecha_inicio = $(".reservas_fecha_inicio").val();
+			var fecha_fin = $(".reservas_dias_reservados").val();
+			$.ajax
+				({
+					method: 'GET',
+					url: '/comprobar_reserva',
+					data: datos,
+					dataType: 'json',
+					success: function (respuesta)
+					{
+					// alert('la respuesta es ' + respuesta); 
+						$("#respuesta").html(data); 
+					},
+					error : function(xhr, status) 
+					{
+						alert('hay error');
+						//alert('ERROR -> '. status);
+					}
+
+				});
+		}
+		}
 	</script>
 {% endblock %}
 
 {% block body %}
 	<div class="container"> {{form(form)}}
 		</div>
-	{% endblock %}
+{% endblock %}
+
+

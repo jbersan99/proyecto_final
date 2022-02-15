@@ -47,4 +47,19 @@ class ReservaRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function comprobarReserva($fecha_inicio, $fecha_fin)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p
+            FROM App\Entity\Reserva p
+            WHERE fecha_inicio >= :fecha_inicio
+            WHERE fecha_fin <= :fecha_fin'
+        )->setParameter('fecha_inicio', $fecha_inicio)
+        ->setParameter('fecha_fin', $fecha_fin);
+
+        return $query->getResult();
+    }
 }

@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ReservasType;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ReservasController extends AbstractController
 {
@@ -37,9 +38,26 @@ class ReservasController extends AbstractController
             return $this->renderForm('reservas/index.html.twig', [
                 'form' => $form,
             ]);
-        }
-        else{
+        } else {
             return $this->redirectToRoute('barco');
         }
+    }
+
+    /**
+     * @Route("/comprobar_reserva", name="comprobar_reserva")
+     */
+    public function comprobarReserva(Request $request, EntityManagerInterface $em)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $fecha_inicio = new \DateTime($request->request->get('fecha'));
+            $fecha_fin = new \DateTime($request->request->get('fecha'));
+
+            $repository = $em->getRepository(Reserva::class);
+
+            $reserva = $repository->comprobarReserva($fecha_inicio, $fecha_fin);
+            var_dump($reserva);
+            return new Response($reserva);
+        }
+        return $this->redirect($this->generateUrl('final'));
     }
 }
