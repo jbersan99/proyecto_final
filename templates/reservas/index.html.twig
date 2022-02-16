@@ -1,35 +1,64 @@
 {% extends 'base.html.twig' %}
 
 {% block javascripts %}
-	<script>
-		//AJAX CON JQUERY
-		$(document).ready(function () {
-		$".reservas_Reservar").click(function()
-		{
-			var fecha_inicio = $(".reservas_fecha_inicio").val();
-			var fecha_fin = $(".reservas_dias_reservados").val();
-			$.ajax
-				({
-					method: 'GET',
-					url: '/comprobar_reserva',
-					data: datos,
-					dataType: 'json',
-					success: function (respuesta)
-					{
-					// alert('la respuesta es ' + respuesta); 
-						$("#respuesta").html(data); 
-					},
-					error : function(xhr, status) 
-					{
-						alert('hay error');
-						//alert('ERROR -> '. status);
+		<script type="text/javascript">
+			{# //AJAX CON JQUERY
+			$(document).ready(function () {
+			$".reservas_Reservar").click(function()
+			{
+				var fecha_inicio = $(".reservas_fecha_inicio").val();
+				var fecha_fin = $(".reservas_dias_reservados").val();
+				$.ajax
+					({
+						method: 'GET',
+						url: '/reserva/'+ {{ id }},
+						data: datos,
+						dataType: 'json',
+						success: function (respuesta) {
+							// alert('la respuesta es ' + respuesta); 
+							$("#respuesta").html(data);
+						},
+						error: function (xhr, status) {
+							alert('hay error');
+							//alert('ERROR -> '. status);
+						}
+
+					});
+			}
+			} #}
+
+			$.ajax({
+				method: "POST",
+				url: "/reservar/" + {{ id }}
+			}).done(function (data){
+				fechas = JSON.parse(data)["fechas"];
+				error = false;
+				if(fechas != undefined){
+					for (let i = 0; i < fechas.length: i++){
+						fecha_inicio = new Date(fechas[i].fecha_inicio.date);
+						fecha_fin = new Date(fechas[i].fecha_fin.date);
+
+						bDates = { start: new Date(fecha_inicio), end: new Date(fecha_fin)}
 					}
 
-				});
-		}
-		}
-	</script>
-{% endblock %}
+					$(".reservas_fecha_inicio").datepicker('destroy').date({
+						//format : 'yyyy-mm-dd',
+						changeMonth:true,
+						numberOfMonths: 2,
+						minDate:0,
+						beforeShowDay: function (date){
+							for (var i = 0; i < bDates.length; i++){
+								if (date >= bDates[i].start && date <= bDates[i].end) return [false, ''];
+							}
+							return [true, ''],
+						}
+					})
+				}
+			})
+
+			
+		</script>
+{% endblock  %}
 
 {% block body %}
 	<div class="container"> {{form(form)}}
