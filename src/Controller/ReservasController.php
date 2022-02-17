@@ -17,7 +17,7 @@ class ReservasController extends AbstractController
     /**
      * @Route("/reservas/{id}", name="reservas")
      */
-    public function reservar(ManagerRegistry $doctrine, Request $request, int $id, EntityManagerInterface $em): Response
+    public function reservar(ManagerRegistry $doctrine, Request $request, int $id): Response
     {
         if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_USER')) {
             $reserva = new Reserva();
@@ -28,29 +28,10 @@ class ReservasController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_USER')) {
-
-                    $reservas = $em->getRepository(Reserva::class)->findAll();
-        
-                    $reserva = new stdClass();
-                    $reserva->fech = [];
-        
-                    foreach ($reservas as $valor){
-                        if($valor->getBarcoReserva()->getId() == $id){
-                            $objeto_fechas = new stdClass();
-                            $objeto_fechas->id = $valor->getId();
-                            $objeto_fechas->fecha_inicio = $valor->getFechaInicio();
-                            $objeto_fechas->fecha_fin = $valor->getFechaFin();
-                            
-                            $reserva->fechas[] = $objeto_fechas;
-                        }
-
-                    }
-                    
-                    $fin = json_encode($reserva);
-                    return new Response($fin);
-        
-                }
+                $reserva = $form->getData();
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($reserva);
+                $entityManager->flush();
 
                 return $this->redirectToRoute('barco');
             }
@@ -64,34 +45,29 @@ class ReservasController extends AbstractController
         }
     }
 
-    // /**
-    //  * @Route("/comprobar_reserva", name="comprobar_reserva")
-    //  */
-    // public function comprobarReserva(EntityManagerInterface $em): Response
-    // {
-    //     if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_USER')) {
+    /**
+     * @Route("/reservar_barco/{id}", name="reservar_barco")
+     */
+    public function reservar_barco(int $id, EntityManagerInterface $em): Response
+    {
+        $reserva = new Reserva();
 
-    //         $reservas = $em->getRepository(Reserva::class)->findAll();
+        $reservas = $em->getRepository(Reserva::class)->findAll();
 
-    //         $reserva = new stdClass();
-    //         $reserva->fech = [];
+        $reserva = new stdClass();
 
-    //         foreach ($reserva as $valor){
+        foreach ($reservas as $valor) {
+            if ($valor->getBarcoReserva()->getId() == $id) {
+                $objeto_fechas = new stdClass();
+                $objeto_fechas->id = $valor->getId();
+                $objeto_fechas->fecha_inicio = $valor->getFechaInicio();
+                $objeto_fechas->fecha_fin = $valor->getFechaFin();
 
-    //         }
+                $reserva->fechas[] = $objeto_fechas;
+            }
+        }
 
-    //         // if ($request->isXmlHttpRequest()) {
-    //         //     $fecha_inicio = new \DateTime($request->request->get('fecha'));
-    //         //     $fecha_fin = new \DateTime($request->request->get('fecha'));
-
-    //         //     $repository = $em->getRepository(Reserva::class);
-
-    //         //     $servicio = $repository->findBy(array('fecha_inicio' => $fecha_inicio, 'fecha_fin' => $fecha_fin));
-
-    //         //     // $reserva = $repository->comprobarReserva($fecha_inicio, $fecha_fin);
-    //         //     var_dump($servicio);
-    //         // }
-    //         // return $this->redirect($this->generateUrl('final'));
-    //     }
-    // }
+        $fechas_reservadas = json_encode($reserva);
+        return new Response($fechas_reservadas);
+    }
 }
