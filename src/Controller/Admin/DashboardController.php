@@ -42,8 +42,6 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         return [
-            MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
-
             MenuItem::section('Barcos'),
             MenuItem::linkToCrud('Barcos', 'fas fa-ship', Barco::class),
 

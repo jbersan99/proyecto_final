@@ -3,8 +3,99 @@
 {% block title %}WaterBoat
 {% endblock %}
 
+{% block javascript %}
+<script>
+    function accionPlay() {
+        if (!medio.paused && !medio.ended) {
+            medio.pause();
+            play.value = '\u25BA'; //\u25BA
+        } else {
+            medio.play();
+            play.value = '||';
+        }
+    }
+
+    function accionReiniciar() {
+        medio.pause();
+        medio.currentTime = 0;
+        medio.play();
+        play.value = '||';
+        //Usar propiedad .currentTime
+        //Reproducir el vídeo
+        //Cambiar el valor del botón a ||
+    }
+
+    function accionRetrasar() {
+        if (medio.currentTime <= 3) {
+            rwd.classList.remove('active');
+            clearInterval(intervalRwd);
+            stopMedia();
+        } else {
+            medio.currentTime -= 3;
+        }
+        //Usar propiedad .curentTime
+        //Contemplar que no existen valores negativos
+    }
+
+    function accionAdelantar() {
+        if (medio.currentTime >= medio.duration - 3) {
+            fwd.classList.remove('active');
+            clearInterval(intervalFwd);
+            stopMedia();
+        } else {
+            medio.currentTime += 3;
+        }
+        //Contemplar que no existen valores mayores a medio.duration	
+    }
+
+    function accionSilenciar() {
+        if (medio.muted == true) {
+            medio.muted = false;
+        } else {
+            medio.muted = true;
+        }
+        //Utilizar medio.muted = true; o medio.muted = false;
+    }
+
+    function accionMasVolumen() {
+        if (medio.volume != 1) {
+            medio.volume += 0.2;
+        }
+        //Contemplar que el valor máximo de volumen es 1
+    }
+
+    function accionMenosVolumen() {
+        if (medio.volume != 0) {
+            medio.volume -= 0.2;
+        }
+        //Contemplar que el valor mínimo de volumen es 0
+    }
+
+    function iniciar() {
+
+        medio = document.getElementById('medio');
+        play = document.getElementById('play');
+        reiniciar = document.getElementById('reiniciar');
+        retrasar = document.getElementById('retrasar');
+        adelantar = document.getElementById('adelantar');
+        silenciar = document.getElementById('silenciar');
+
+        play.addEventListener('click', accionPlay);
+        reiniciar.addEventListener('click', accionReiniciar);
+        retrasar.addEventListener('click', accionRetrasar);
+        adelantar.addEventListener('click', accionAdelantar);
+        silenciar.addEventListener('click', accionSilenciar);
+        menosVolumen.addEventListener('click', accionMenosVolumen);
+        masVolumen.addEventListener('click', accionMasVolumen);
+    }
+
+    window.addEventListener('load', iniciar, false);
+</script>
+
+{% endblock %}
+
 {% block body %}
-    
+
 	<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
 <div class="site-wrap">
@@ -22,7 +113,7 @@
 			<div class="header-top bg-light">
 				<div class="container">
 					<div class="row align-items-center">
-						<div class="col-6 col-lg-3">
+						<div class="col-6 col-lg-3 voltereta">
 							<a href="{{ path('barco')}}">
 								<img
 								src="images/logo.png" alt="Image" class="img-fluid">
@@ -103,10 +194,10 @@
 											<a href="{{ path('show_barcos')}}" class="nav-link text-left">Nuestra Flota</a>
 										</li>
 										<li>
-											<a href="testimonials.html" class="nav-link text-left">Valoraciones</a>
+											<a href="{{ path('valoraciones')}}" class="nav-link text-left">Valoraciones</a>
 										</li>
 										<li class="active">
-											<a href="about.html" class="nav-link text-left">Sobre Nosotros</a>
+											<a href="#" class="nav-link text-left">Sobre Nosotros</a>
 										</li>
 										{% if is_granted('ROLE_USER') %}
 										<li>
@@ -132,6 +223,32 @@
 
 			</div>
 
+		</div>
+
+		<div class="site-section">
+			<div class="container">	
+				<h1>WaterBoat Informacion</h1>				
+				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat dolor nunc, eu rhoncus nisl auctor in. Integer at mollis turpis. Maecenas placerat, quam quis ultricies feugiat, dolor mi blandit nunc, a efficitur lorem nibh eu nisi. In efficitur tortor sed tempus fermentum. Aliquam a pellentesque neque. Aenean euismod eros vitae mattis gravida. Nam hendrerit quam a sapien volutpat, at feugiat ex efficitur. Ut erat nunc, elementum a leo mattis, consequat sodales tellus. Integer facilisis quis lorem vel porta. Nullam a mattis mauris. Ut eget nulla sem. In lobortis sagittis dapibus. Suspendisse dapibus elit at libero suscipit pellentesque. </p>
+			</div>
+
+			<div class="container">	
+			<div class="row">				
+					<video id="medio" width="1140" height="400">
+						<source src="videos/video.mp4">
+					</video>
+
+					<nav>
+						<input type="button" id="reiniciar" value="&#x21ba;">
+						<input type="button" id="retrasar" value="&laquo;">
+						<input type="button" id="play" value="&#9658;">
+						<input type="button" id="adelantar" value="&raquo;">
+						<input type="button" id="silenciar" value="&#x1f507;">
+						<label>Volumen</label>
+						<input type="button" id="menosVolumen" value="-">
+						<input type="button" id="masVolumen" value="+">
+					</nav>
+				</div>
+			</div>
 		</div>
 
 		<div class="site-section bg-image overlay" style="background-image: url('images/hero_2.jpg');">

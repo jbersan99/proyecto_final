@@ -3,6 +3,97 @@
 {% block title %}WaterBoat
 {% endblock %}
 
+{% block javascript %}
+<script>
+    function accionPlay() {
+        if (!medio.paused && !medio.ended) {
+            medio.pause();
+            play.value = '\u25BA'; //\u25BA
+        } else {
+            medio.play();
+            play.value = '||';
+        }
+    }
+
+    function accionReiniciar() {
+        medio.pause();
+        medio.currentTime = 0;
+        medio.play();
+        play.value = '||';
+        //Usar propiedad .currentTime
+        //Reproducir el vídeo
+        //Cambiar el valor del botón a ||
+    }
+
+    function accionRetrasar() {
+        if (medio.currentTime <= 3) {
+            rwd.classList.remove('active');
+            clearInterval(intervalRwd);
+            stopMedia();
+        } else {
+            medio.currentTime -= 3;
+        }
+        //Usar propiedad .curentTime
+        //Contemplar que no existen valores negativos
+    }
+
+    function accionAdelantar() {
+        if (medio.currentTime >= medio.duration - 3) {
+            fwd.classList.remove('active');
+            clearInterval(intervalFwd);
+            stopMedia();
+        } else {
+            medio.currentTime += 3;
+        }
+        //Contemplar que no existen valores mayores a medio.duration	
+    }
+
+    function accionSilenciar() {
+        if (medio.muted == true) {
+            medio.muted = false;
+        } else {
+            medio.muted = true;
+        }
+        //Utilizar medio.muted = true; o medio.muted = false;
+    }
+
+    function accionMasVolumen() {
+        if (medio.volume != 1) {
+            medio.volume += 0.2;
+        }
+        //Contemplar que el valor máximo de volumen es 1
+    }
+
+    function accionMenosVolumen() {
+        if (medio.volume != 0) {
+            medio.volume -= 0.2;
+        }
+        //Contemplar que el valor mínimo de volumen es 0
+    }
+
+    function iniciar() {
+
+        medio = document.getElementById('medio');
+        play = document.getElementById('play');
+        reiniciar = document.getElementById('reiniciar');
+        retrasar = document.getElementById('retrasar');
+        adelantar = document.getElementById('adelantar');
+        silenciar = document.getElementById('silenciar');
+
+        play.addEventListener('click', accionPlay);
+        reiniciar.addEventListener('click', accionReiniciar);
+        retrasar.addEventListener('click', accionRetrasar);
+        adelantar.addEventListener('click', accionAdelantar);
+        silenciar.addEventListener('click', accionSilenciar);
+        menosVolumen.addEventListener('click', accionMenosVolumen);
+        masVolumen.addEventListener('click', accionMasVolumen);
+    }
+
+    window.addEventListener('load', iniciar, false);
+</script>
+
+{% endblock %}
+
 {% block body %}
 	<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
@@ -21,7 +112,7 @@
 			<div class="header-top bg-light">
 				<div class="container">
 					<div class="row align-items-center">
-						<div class="col-6 col-lg-3">
+						<div class="col-6 col-lg-3 voltereta">
 							<a href="{{ path('barco')}}">
 								<img
 								src="images/logo.png" alt="Image" class="img-fluid">
@@ -89,7 +180,7 @@
 											<a href="{{ path('show_barcos')}}" class="nav-link text-left">Nuestra Flota</a>
 										</li>
 										<li>
-											<a href="testimonials.html" class="nav-link text-left">Valoraciones</a>
+											<a href="{{ path('valoraciones')}}" class="nav-link text-left">Valoraciones</a>
 										</li>
 										<li>
 											<a href="{{ path('about')}}" class="nav-link text-left">Sobre Nosotros</a>
@@ -305,6 +396,29 @@
 
 		<div class="site-section">
 			<div class="container">
+				<div class="col-md-12 text-center">
+					<h3 class="heading-92913 text-black text-center">Video Demostración</h3>
+				</div>
+				<div class="row">
+						<video id="medio" width="1140" height="640.91">
+							<source src="videos/video3.mp4">
+						</video>
+						<nav>
+							<input type="button" id="reiniciar" value="&#x21ba;">
+							<input type="button" id="retrasar" value="&laquo;">
+							<input type="button" id="play" value="&#9658;">
+							<input type="button" id="adelantar" value="&raquo;">
+							<input type="button" id="silenciar" value="&#x1f507;">
+							<label>Volumen</label>
+							<input type="button" id="menosVolumen" value="-">
+							<input type="button" id="masVolumen" value="+">
+						</nav>
+				</div>
+			</div>
+		</div>
+
+		<div class="site-section">
+			<div class="container">
 				<div class="row justify-content-center mb-5">
 					<div class="col-md-7 text-center">
 						<span class="text-serif text-primary">Equipo de Desarrollo</span>
@@ -315,7 +429,7 @@
 					<div class="col-lg-3 col-md-6 mb-lg-0">
 						<div class="person">
 							<figure>
-								<img src="images/person_1.jpg" alt="Image" class="img-fluid">
+								<img src="images/only_person.jpeg" alt="Image" class="img-fluid">
 								<div class="social">
 									<a href="#">
 										<span class="icon-facebook"></span>
@@ -329,7 +443,7 @@
 								</div>
 							</figure>
 							<div class="person-contents">
-								<h3>Craig Daniel</h3>
+								<h3>Jose Luis</h3>
 								<span class="position">Desarrollador Web</span>
 							</div>
 						</div>
@@ -338,7 +452,7 @@
 					<div class="col-lg-3 col-md-6 mb-lg-0">
 						<div class="person">
 							<figure>
-								<img src="images/person_2.jpg" alt="Image" class="img-fluid">
+								<img src="images/only_person.jpeg" alt="Image" class="img-fluid">
 								<div class="social">
 									<a href="#">
 										<span class="icon-facebook"></span>
@@ -352,7 +466,7 @@
 								</div>
 							</figure>
 							<div class="person-contents">
-								<h3>Craig Daniel</h3>
+								<h3>Jose Luis</h3>
 								<span class="position">Desarrollador Base de Datos</span>
 							</div>
 						</div>
@@ -361,7 +475,7 @@
 					<div class="col-lg-3 col-md-6 mb-lg-0">
 						<div class="person">
 							<figure>
-								<img src="images/person_3.jpg" alt="Image" class="img-fluid">
+								<img src="images/only_person.jpeg" alt="Image" class="img-fluid">
 								<div class="social">
 									<a href="#">
 										<span class="icon-facebook"></span>
@@ -375,7 +489,7 @@
 								</div>
 							</figure>
 							<div class="person-contents">
-								<h3>Craig Daniel</h3>
+								<h3> Jose Luis </h3>
 								<span class="position">Desarrollador Servidor</span>
 							</div>
 						</div>
@@ -384,7 +498,7 @@
 					<div class="col-lg-3 col-md-6 mb-lg-0">
 						<div class="person">
 							<figure>
-								<img src="images/person_4.jpg" alt="Image" class="img-fluid">
+								<img src="images/only_person.jpeg" alt="Image" class="img-fluid">
 								<div class="social">
 									<a href="#">
 										<span class="icon-facebook"></span>
@@ -398,73 +512,12 @@
 								</div>
 							</figure>
 							<div class="person-contents">
-								<h3>Craig Daniel</h3>
+								<h3>Jose Luis</h3>
 								<span class="position">Diseño</span>
 							</div>
 						</div>
 					</div>
 
-				</div>
-			</div>
-		</div>
-
-		<div class="site-section">
-			<div class="container">
-				<div class="row justify-content-center mb-5">
-					<div class="col-md-7 text-center">
-						<span class="text-serif text-primary">Comentarios destacados</span>
-						<h3 class="heading-92913 text-black text-center">¿Que opinan nuestros clientes?</h3>
-					</div>
-				</div>
-				<div class="row">
-					<div class="mb-4 mb-lg-0 col-md-6 col-lg-4">
-						<div class="testimony-39291">
-							<blockquote>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem laborum cumque commodi, unde doloribus.</p>
-							</blockquote>
-							<div class="d-flex vcard align-items-center">
-								<div class="pic mr-3">
-									<img src="images/person_3_sq.jpg" alt="Image" class="img-fluid">
-								</div>
-								<div class="text">
-									<strong class="d-block">John Doe</strong>
-									<span>CEO and Co-Founder</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="mb-4 mb-lg-0 col-md-6 col-lg-4">
-						<div class="testimony-39291">
-							<blockquote>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem laborum cumque commodi, unde doloribus.</p>
-							</blockquote>
-							<div class="d-flex vcard align-items-center">
-								<div class="pic mr-3">
-									<img src="images/person_4_sq.jpg" alt="Image" class="img-fluid">
-								</div>
-								<div class="text">
-									<strong class="d-block">John Doe</strong>
-									<span>CEO and Co-Founder</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="mb-4 mb-lg-0 col-md-6 col-lg-4">
-						<div class="testimony-39291">
-							<blockquote>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem laborum cumque commodi, unde doloribus.</p>
-							</blockquote>
-							<div class="d-flex vcard align-items-center">
-								<div class="pic mr-3">
-									<img src="images/person_3_sq.jpg" alt="Image" class="img-fluid">
-								</div>
-								<div class="text">
-									<strong class="d-block">John Doe</strong>
-									<span>CEO and Co-Founder</span>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
