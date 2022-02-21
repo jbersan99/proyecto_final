@@ -34,6 +34,8 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            $user->setRoles(["ROLE_USER"]);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -49,7 +51,7 @@ class RegistrationController extends AbstractController
                 ->from('correosymfony@gmail.com')
                 ->to($user->getEmail())
                 ->subject('¡Bienvenido a WaterBoat!')
-                ->text("Encantado de conocerte {$user->getNombre()}! ❤️
+                ->text("Encantado de conocerte {$user->getNombre()}! ❤️ 
                 Confirma tu cuenta desde el siguiente enlace: ' . {$signatureComponents->getSignedUrl()}");
 
             $mailer->send($email);

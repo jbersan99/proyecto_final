@@ -9,6 +9,7 @@
 <script>
 	var bDates = [];
 	var dates = [];
+	var error = false;
     $(function(){
 		var dateRange = [];
 		$.ajax({
@@ -16,7 +17,6 @@
             url: "/reservar_barco/" + {{ id }}
 		}).done(function(data){
 			fechas = JSON.parse(data)["fechas"];
-            error = false;
 			if (fechas != undefined) {
 				for(let i = 0; i < fechas.length; i++){
 					fecha_inicio = new Date(fechas[i].fecha_inicio.date);
@@ -25,33 +25,53 @@
 					
 					// populate the array
 					for (var d = new Date(fecha_inicio); d <= new Date(fecha_fin); d.setDate(d.getDate() + 1)) {
-						dateRange.push($.datepicker.formatDate('dd-mm-yy', d));
+						dateRange.push($.datepicker.formatDate('mm/dd/yy', d));
 					}
 
 					function disableDates(date) {
-						var dateString = jQuery.datepicker.formatDate('dd-mm-yy', date);
+						var dateString = jQuery.datepicker.formatDate('mm/dd/yy', date);
    						return [dateRange.indexOf(dateString) == -1];
 					}
 				}
 			}
 
 			$("#datepicker").datepicker({
-				dateFormat: 'dd-mm-yy',
+				dateFormat: 'mm/dd/yy',
 				minDate: 0, //restrict user to choose previous date
 				beforeShowDay: disableDates,
 			});
 
 			$("#datepicker").change(function(){
 					var fecha = $("#datepicker").datepicker("getDate");
-					var new_fecha = fecha.getDate() +'-' + (fecha.getMonth()+1) + '-'+ fecha.getFullYear() 
+					var new_fecha =  (fecha.getMonth()+1)  + '/' + fecha.getDate()  + '/'+ fecha.getFullYear() 
 
 					$("#datepicker2").datepicker({
-						dateFormat: 'dd-mm-yy',
+						dateFormat: 'mm/dd/yy',
 						minDate: new_fecha, 
 						beforeShowDay: disableDates,
 					});
 					
 			});
+
+			$("#datepicker2").change(function(){
+				var fecha_1 = new Date($("#datepicker").val());
+				var fecha_2 = new Date($("#datepicker2").val());
+				for (let i = 0; i < bDates.length; i++){
+					fecha_inicio = new Date(bDates[i].start)
+					fecha_fin = new Date(bDates[i].end)
+
+					console.log(fecha_inicio, fecha_fin, fecha_1, fecha_2);
+
+					if(fecha_inicio <= fecha_1 && fecha_1 <= fecha_fin || fecha_inicio <= fecha_2 && fecha_2 <= fecha_fin || fecha_1 < fecha_inicio && fecha_2 > fecha_fin){
+						error = true;
+					}
+
+				}
+
+				console.log(error);
+			});
+
+			
 
 		})
 

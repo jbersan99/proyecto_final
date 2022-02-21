@@ -55,15 +55,6 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('tipo_licencia', TextType::class)
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'User' => 'ROLE_USER',
-                    'Admin' => 'ROLE_ADMIN',
-                ],
-                'expanded' => true,
-                'multiple' => true,
-                'data' => $entity->getRoles() // Current roles assigned..
-            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
