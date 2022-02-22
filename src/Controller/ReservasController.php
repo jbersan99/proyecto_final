@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ReservasType;
+use App\Repository\ReservaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use stdClass;
 
@@ -69,5 +70,35 @@ class ReservasController extends AbstractController
 
         $fechas_reservadas = json_encode($reserva);
         return new Response($fechas_reservadas);
+    }
+
+    /**                                                                                   
+     * @Route("/reservar/{id}", name="reservar")
+     */
+    public function reserva(ManagerRegistry $doctrine, int $id, Request $request): Response
+    {
+        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_USER')) {
+            // $barco = $doctrine->getRepository(Barco::class)->find($id);
+            // $user = $this->get('security.token_storage')->getToken()->getUser();
+            $reserva = new Reserva();
+
+            $params = json_decode($request, true);
+
+            $inicio = $params[0]->get('inicio');
+            $fin = $params[0]->get('fin');
+
+            $time = new \DateTime();
+
+            $reserva->setFechaInicio($inicio);
+            $reserva->setFechaFin($fin);
+            $reserva->setCreacionReserva($time);
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($reserva);
+            $entityManager->flush();
+
+            return new Response('This is ajax response');
+        } else {
+            return $this->redirectToRoute('barco');
+        }
     }
 }

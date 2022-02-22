@@ -48,7 +48,7 @@ class ReservaRepository extends ServiceEntityRepository
     }
     */
 
-    public function comprobar_Reserva($fecha_inicio, $fecha_fin)
+    public function realizarRerseva($fecha_inicio, $fecha_fin)
     {
         $entityManager = $this->getEntityManager();
 

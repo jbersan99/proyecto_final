@@ -11,7 +11,11 @@
 	var dates = [];
 	var error = false;
     $(function(){
+		document.getElementById("next").style.display = "none";
+		document.getElementById("stop").style.display = "none";
+		document.getElementById("pasa").disabled = true;
 		var dateRange = [];
+		let jsonObject = new Array();
 		$.ajax({
 			method: "GET",
             url: "/reservar_barco/" + {{ id }}
@@ -60,18 +64,50 @@
 					fecha_inicio = new Date(bDates[i].start)
 					fecha_fin = new Date(bDates[i].end)
 
-					console.log(fecha_inicio, fecha_fin, fecha_1, fecha_2);
-
 					if(fecha_inicio <= fecha_1 && fecha_1 <= fecha_fin || fecha_inicio <= fecha_2 && fecha_2 <= fecha_fin || fecha_1 < fecha_inicio && fecha_2 > fecha_fin){
 						error = true;
+					}else{
+						error = false;
 					}
 
 				}
 
 				console.log(error);
+
+				if(error == true){
+					document.getElementById("next").style.display = "none";
+					document.getElementById("stop").style.display = "block";
+					document.getElementById("pasa").disabled = true;
+				}else{
+					document.getElementById("stop").style.display = "none";
+					document.getElementById("next").style.display = "block";
+					document.getElementById("pasa").disabled = false;
+					var inicio = $("#datepicker").datepicker("getDate");
+					var fin = $("#datepicker2").datepicker("getDate");
+
+					jsonObject.push({
+						"inicio": inicio,
+						"fin": fin
+					});
+
+				}
+
+
 			});
 
-			
+			$("#pasa").click(function(){
+				console.log(jsonObject);
+						$.ajax({
+							method: "POST",
+							url: "/reservar/" + {{ id }},
+							dataType: "json",
+							data: jsonObject,
+						}).done(function(data){
+							alert("Reserva Realizda");
+						});
+
+					});
+
 
 		})
 
@@ -84,6 +120,16 @@
 {% endblock %}
 
 {% block body %}
+<style>
+	#next{
+		color:green;
+		font-weight:bold;
+	}
+	#stop{
+		color:red;
+		font-weight:bold;
+	}
+</style>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
 		<div class="site-wrap">
@@ -167,6 +213,19 @@
 		<div class="container">
 			<div class="row">
 				<p>Seleccionar fecha fin: <input type="text" id="datepicker2"></p>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<p id="stop">Fecha no disponible</p>
+				<p id="next">Fecha disponible</p>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<button id="pasa" class="btn btn-primary py-3 px-5">Crear Reserva</button>
 			</div>
 		</div>
 	</div>
