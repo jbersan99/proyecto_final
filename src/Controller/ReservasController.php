@@ -75,22 +75,22 @@ class ReservasController extends AbstractController
     /**                                                                                   
      * @Route("/reservar/{id}", name="reservar")
      */
-    public function reserva(ManagerRegistry $doctrine, int $id, Request $request): Response
+    public function reserva(ManagerRegistry $doctrine, Request $request): Response
     {
         if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_USER')) {
             // $barco = $doctrine->getRepository(Barco::class)->find($id);
             // $user = $this->get('security.token_storage')->getToken()->getUser();
             $reserva = new Reserva();
 
-            $params = json_decode($request, true);
+            //$params = json_decode($request, true);
 
-            $inicio = $params[0]->get('inicio');
-            $fin = $params[0]->get('fin');
+            $inicio = $request->get('inicio');
+            $fin = $request->get('fin');
 
             $time = new \DateTime();
 
-            $reserva->setFechaInicio($inicio);
-            $reserva->setFechaFin($fin);
+            $reserva->setFechaInicio(\DateTime::createFromFormat('Y-m-d', $inicio));
+            $reserva->setFechaFin(\DateTime::createFromFormat('Y-m-d', $fin));
             $reserva->setCreacionReserva($time);
             $entityManager = $doctrine->getManager();
             $entityManager->persist($reserva);

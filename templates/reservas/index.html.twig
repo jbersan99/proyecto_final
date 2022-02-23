@@ -15,7 +15,7 @@
 		document.getElementById("stop").style.display = "none";
 		document.getElementById("pasa").disabled = true;
 		var dateRange = [];
-		let jsonObject = new Array();
+		let jsonObject = {};
 		$.ajax({
 			method: "GET",
             url: "/reservar_barco/" + {{ id }}
@@ -79,16 +79,33 @@
 					document.getElementById("stop").style.display = "block";
 					document.getElementById("pasa").disabled = true;
 				}else{
+					var inicio = $("#datepicker").datepicker("getDate");
+					var fin = $("#datepicker2").datepicker("getDate");
+					var new_fecha_inicio;
+
+					if(inicio.getMonth()+1 < 10){
+						new_fecha_inicio = inicio.getFullYear()  + '-' + 0 + (inicio.getMonth()+1)  + '-' + inicio.getDate();
+					}else{
+						new_fecha_inicio = inicio.getFullYear()  + '-' + (inicio.getMonth()+1)  + '-' + inicio.getDate();
+					}
+
+					if(fin.getMonth()+1 < 10){
+						new_fecha_fin = fin.getFullYear()  + '-' + 0 + (fin.getMonth()+1)  + '-' + fin.getDate();
+					}else{
+						new_fecha_fin = fin.getFullYear()  + '-' + (fin.getMonth()+1)  + '-' + fin.getDate();
+					}
+					
+					
+
+					jsonObject = {
+						"inicio": new_fecha_inicio,
+						"fin": new_fecha_fin
+					};
+
 					document.getElementById("stop").style.display = "none";
 					document.getElementById("next").style.display = "block";
 					document.getElementById("pasa").disabled = false;
-					var inicio = $("#datepicker").datepicker("getDate");
-					var fin = $("#datepicker2").datepicker("getDate");
-
-					jsonObject.push({
-						"inicio": inicio,
-						"fin": fin
-					});
+					
 
 				}
 
