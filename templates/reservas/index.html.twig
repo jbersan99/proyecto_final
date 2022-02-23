@@ -16,6 +16,9 @@
 		document.getElementById("pasa").disabled = true;
 		var dateRange = [];
 		let jsonObject = {};
+		let patronObj = {};
+		var new_fecha_inicio;
+		var new_fecha_fin;
 		$.ajax({
 			method: "GET",
             url: "/reservar_barco/" + {{ id }}
@@ -81,7 +84,6 @@
 				}else{
 					var inicio = $("#datepicker").datepicker("getDate");
 					var fin = $("#datepicker2").datepicker("getDate");
-					var new_fecha_inicio;
 
 					if(inicio.getMonth()+1 < 10){
 						new_fecha_inicio = inicio.getFullYear()  + '-' + 0 + (inicio.getMonth()+1)  + '-' + inicio.getDate();
@@ -97,11 +99,6 @@
 					
 					
 
-					jsonObject = {
-						"inicio": new_fecha_inicio,
-						"fin": new_fecha_fin
-					};
-
 					document.getElementById("stop").style.display = "none";
 					document.getElementById("next").style.display = "block";
 					document.getElementById("pasa").disabled = false;
@@ -113,14 +110,20 @@
 			});
 
 			$("#pasa").click(function(){
-				console.log(jsonObject);
+				var patron = $(".patron:checked").val();
+				jsonObject = {
+						"inicio": new_fecha_inicio,
+						"fin": new_fecha_fin,
+						"patron": patron
+					}				
+					console.log(jsonObject);
 						$.ajax({
 							method: "POST",
 							url: "/reservar/" + {{ id }},
 							dataType: "json",
-							data: jsonObject,
+							data: jsonObject
 						}).done(function(data){
-							alert("Reserva Realizda");
+							window.location.href = '/getreservas';
 						});
 
 					});
@@ -242,7 +245,14 @@
 
 		<div class="container">
 			<div class="row">
-				<button id="pasa" class="btn btn-primary py-3 px-5">Crear Reserva</button>
+				<p>Desea un patrón de Barco:</p>
+				<input type="radio" class="patron" name="patron" value="si" checked>
+				<label for="html">Si</label><br>
+				<input type="radio" class="patron" name="patron" value="no">
+				<label for="html">No</label><br>
+			</div>
+			<div class="row">
+				<input id="pasa" class="btn btn-primary py-3 px-5" value="Crear Reserva" onclick="location.href='/getreservas';">  </input>
 			</div>
 		</div>
 	</div>

@@ -26,6 +26,8 @@ class BarcoCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            NumberField::new('ID')
+            ->hideOnForm(),
             TextField::new('Nombre')
             ->setRequired(true),
             TextField::new('Matricula')

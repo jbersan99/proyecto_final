@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Entity\Barco;
+use App\Entity\Reserva;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -44,6 +45,9 @@ class DashboardController extends AbstractDashboardController
         return [
             MenuItem::section('Barcos'),
             MenuItem::linkToCrud('Barcos', 'fas fa-ship', Barco::class),
+
+            MenuItem::section('Reservas'),
+            MenuItem::linkToCrud('Reservas', 'fa fa-book', Reserva::class),
 
             MenuItem::section('Users'),
             MenuItem::linkToCrud('Users', 'fa fa-user', User::class),

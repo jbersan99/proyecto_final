@@ -10,19 +10,25 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
 
 class ReservasType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('fecha_inicio', DateType::class, [
-                'widget' => 'single_text',
+            ->add('valoracion', IntegerType::class, ['required' => true,
+            'min' => 0, 'max' => 5
             ])
-            ->add('fecha_fin', DateType::class, [
-                'widget' => 'single_text',
+            ->add('comentario', TextType::class,['required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Por favor introduce tu comentario',
+                    ])
+                ],
             ])
-            ->add('Comprobar', SubmitType::class);
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

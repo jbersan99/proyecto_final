@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ReservasType;
-use App\Repository\ReservaRepository;
+use App\Entity\Barco;
 use Doctrine\ORM\EntityManagerInterface;
 use stdClass;
 
@@ -75,20 +75,32 @@ class ReservasController extends AbstractController
     /**                                                                                   
      * @Route("/reservar/{id}", name="reservar")
      */
-    public function reserva(ManagerRegistry $doctrine, Request $request): Response
+    public function reserva(ManagerRegistry $doctrine, Request $request, int $id): Response
     {
         if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_USER')) {
-            // $barco = $doctrine->getRepository(Barco::class)->find($id);
-            // $user = $this->get('security.token_storage')->getToken()->getUser();
+            $barco = $doctrine->getRepository(Barco::class)->find($id);
+            $user = $this->get('security.token_storage')->getToken()->getUser();
             $reserva = new Reserva();
 
-            //$params = json_decode($request, true);
-
+            $patron = $request->get('patron');
             $inicio = $request->get('inicio');
             $fin = $request->get('fin');
 
+            $inicio_day = explode("-", $inicio);
+            $fin_day = explode("-", $fin);
+
+            $interval = $fin_day[2] - $inicio_day[2];
+            
+            if($patron == "si"){
+                $reserva->setPrecioTotal(($interval+1) * $barco->getPrecioConPatron());
+            }else{
+                $reserva->setPrecioTotal(($interval+1) * $barco->getPrecioSinPatron());
+            }
+            
             $time = new \DateTime();
 
+            $reserva->setBarcoReserva($barco);
+            $reserva->setUsuarioReserva($user);
             $reserva->setFechaInicio(\DateTime::createFromFormat('Y-m-d', $inicio));
             $reserva->setFechaFin(\DateTime::createFromFormat('Y-m-d', $fin));
             $reserva->setCreacionReserva($time);
@@ -96,9 +108,52 @@ class ReservasController extends AbstractController
             $entityManager->persist($reserva);
             $entityManager->flush();
 
-            return new Response('This is ajax response');
+            return new Response('/getreservas');
+        } else {
+            return $this->redirectToRoute('barco');
+        }
+
+    }
+
+    /**                                                                                   
+     * @Route("/getreservas", name="getreservas")
+     */
+    public function getReservas(ManagerRegistry $doctrine): Response
+    {
+        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_USER')) {
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $reservas = $doctrine->getRepository(Reserva::class)->getReservas(['usuario_reserva_id' => $user->getId()]);
+
+            return $this->render('reservas/show.html.twig', array(
+                'reservas' => $reservas,
+            ));
         } else {
             return $this->redirectToRoute('barco');
         }
     }
+
+    /**                                                                                   
+     * @Route("/eliminar_reserva/{id}", name="delete_reserva")
+     */
+    public function deleteReserva(ManagerRegistry $doctrine, int $id): Response
+    {
+        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_USER')) {
+            $reserva = $doctrine->getRepository(Reserva::class)->find($id);
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($reserva);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('getreservas');
+        } else {
+            return $this->redirectToRoute('barco');
+        }
+    }
+
+    function dateDiff($date1, $date2)
+        {
+            $date1_ts = strtotime($date1);
+            $date2_ts = strtotime($date2);
+            $diff = $date2_ts - $date1_ts;
+            return round($diff / 86400);
+        }
 }

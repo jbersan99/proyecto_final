@@ -180,7 +180,7 @@
 											<a href="{{ path('show_barcos')}}" class="nav-link text-left">Nuestra Flota</a>
 										</li>
 										<li>
-											<a href="{{ path('valoraciones')}}" class="nav-link text-left">Valoraciones</a>
+											<a href="{{ path('getreservas')}}" class="nav-link text-left">Reservas</a>
 										</li>
 										<li>
 											<a href="{{ path('about')}}" class="nav-link text-left">Sobre Nosotros</a>
@@ -323,21 +323,17 @@
 					</div>
 					<div class="col">
 						<div class="counter-39392">
-							<h3>X</h3>
+							{% set comentarios = 0 %}
+							{% for reserva in reservas %} {% set comentarios = comentarios + 1 %} {% endfor %}
+							<h3>{{comentarios}}</h3>
 							<span>Comentarios</span>
 						</div>
 					</div>
 					<div class="col">
 						<div class="counter-39392">
-							{% set patrones = 0 %}
-							{% for barco in barcos %} {% if barco.patron == 1 %} {% set patrones = patrones + 1 %} {% endif %}{% endfor %}
-							<h3>{{patrones}}</h3>
-							<span>Numero de patrones</span>
-						</div>
-					</div>
-					<div class="col">
-						<div class="counter-39392">
-							<h3>X</h3>
+							{% set valoraciones = 0 %}
+							{% for reserva in reservas %} {% set valoraciones = valoraciones + 1 %} {% endfor %}
+							<h3>{{valoraciones}}</h3>
 							<span>Valoraciones</span>
 						</div>
 					</div>

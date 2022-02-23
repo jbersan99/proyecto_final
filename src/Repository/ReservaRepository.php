@@ -48,18 +48,19 @@ class ReservaRepository extends ServiceEntityRepository
     }
     */
 
-    public function realizarRerseva($fecha_inicio, $fecha_fin)
+
+    /**
+     * @return Reserva[]
+     */
+    public function getReservas($id_user): array
     {
-        $entityManager = $this->getEntityManager();
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.usuario_reserva = :val')
+            ->setParameter('val', $id_user)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
 
-        $query = $entityManager->createQuery(
-            'SELECT p
-            FROM App\Entity\Reserva p
-            WHERE fecha_inicio >= :fecha_inicio
-            WHERE fecha_fin <= :fecha_fin'
-        )->setParameter('fecha_inicio', $fecha_inicio)
-        ->setParameter('fecha_fin', $fecha_fin);
-
-        return $query->getResult();
     }
 }

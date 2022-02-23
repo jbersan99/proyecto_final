@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Barco;
+use App\Entity\Reserva;
 use App\Form\BarcoType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -20,14 +21,12 @@ class BarcoController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         $barcos = $doctrine->getRepository(Barco::class)->findAll();
-        $patrones = 0;
-        foreach($barcos as $barco){
-            $patrones == $barco->getLicencia();
-        }
+
+        $reservas = $doctrine->getRepository(Reserva::class)->findAll();
 
         return $this->render('barco/index.html.twig', [
             'barcos' => $barcos,
-            'patrones' => $patrones,
+            'reservas' => $reservas,
             'controller_name' => 'BarcoController',
         ]);
     }
