@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Reserva;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,9 +19,9 @@ class ReservasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('valoracion', IntegerType::class, ['required' => true,
-            'min' => 0, 'max' => 5
-            ])
+            ->add('valoracion', IntegerType::class, array(
+                'attr' => array('min' => 1, 'max' => 5)
+           ))
             ->add('comentario', TextType::class,['required' => true,
                 'constraints' => [
                     new NotBlank([

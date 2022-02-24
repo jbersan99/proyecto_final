@@ -39,10 +39,6 @@ class ReservaCrudController extends AbstractCrudController
             ->setRequired(true),
             TextField::new('Comentario')
             ->setRequired(true),
-            NumberField::new('Barco_Reserva')
-            ->hideOnForm(),
-            NumberField::new('Usuario_Reserva')
-            ->hideOnForm(),
         ];
     }
     
