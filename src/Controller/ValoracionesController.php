@@ -9,7 +9,6 @@ use App\Entity\Reserva;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ReservasType;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use stdClass;
 
@@ -21,8 +20,8 @@ class ValoracionesController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine, Request $request, int $id): Response
     {
-        date_default_timezone_set("Europe/Madrid");
         if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_USER')) {
+            date_default_timezone_set("Europe/Madrid");
             $reserva_fin = $doctrine->getRepository(Reserva::class)->find($id);
             $fecha_actual = date('Y-m-d');
             
@@ -92,12 +91,10 @@ class ValoracionesController extends AbstractController
     /**                                                                                   
      * @Route("/getvaloraciones", name="getvaloraciones")
      */
-    public function getReservas(ManagerRegistry $doctrine): Response
+    public function getReservas(EntityManagerInterface $em): Response
     {
-            $user = $this->get('security.token_storage')->getToken()->getUser();
-
             return $this->render('valoraciones/show.html.twig', array(
-                
+
             ));
         
     }

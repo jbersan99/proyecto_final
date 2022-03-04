@@ -26,8 +26,13 @@
 			for(let i = 0; i < valoraciones.length; i++){
 				valoracion = valoraciones[i].valoracion;
 				comentario = valoraciones[i].comentario;
-				$(".rower").append('<div> <h2> Comentario: '+ comentario +'</h2> </div>'); 
-				$(".rower").append('<div> <h2> Valoración : '+ valoracion +' <img src="{{ asset( imagePath ) }}" alt="Image" class="img-fluid" width="45px"> </h2> </div>'); 
+				if(valoracion == null || comentario == null){
+					$(".rower").append('<div> <h2> No hay comentarios ni valoraciones aun</h2> </div>'); 
+				}else{
+					$(".rower").append('<div> <h2> Comentario: '+ comentario +'</h2> </div>'); 
+					$(".rower").append('<div> <h2> Valoración : '+ valoracion +' <img src="{{ asset( imagePath ) }}" alt="Image" class="img-fluid" width="45px"> </h2> </div>'); 
+				}
+				
 			}
 
 		})
@@ -179,7 +184,6 @@
 					</div>
 				</div>
                 <div class="rower">
-					
 				</div>	
 		</div>
 		<div class="site-section bg-image overlay" style="background-image: url('images/hero_2.jpg');">
