@@ -2,10 +2,110 @@
 
 {% block title %}WaterBoat
 {% endblock %}
+{% set imagePath = 'images/star.png' %}
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+<script>
+    $(function(){
+		var valoracion;
+		var comentario;
+		$.ajax({
+			method: "GET",
+            url: "/show_valoraciones/"
+		}).done(function(data){
+	
+			$(document).ready( function () {
+				$('#myTable').DataTable();
+			} );
+
+			valoraciones = JSON.parse(data)["valoraciones"];
+
+			for(let i = 0; i < valoraciones.length; i++){
+				valoracion = valoraciones[i].valoracion;
+				comentario = valoraciones[i].comentario;
+				$(".rower").append('<div> <h2> Comentario: '+ comentario +'</h2> </div>'); 
+				$(".rower").append('<div> <h2> Valoración : '+ valoracion +' <img src="{{ asset( imagePath ) }}" alt="Image" class="img-fluid" width="45px"> </h2> </div>'); 
+			}
+
+		})
+		
+	})
+</script>
+
+{% endblock %}
 
 {% block body %}
-    
 	<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+<div class="site-wrap">
+
+			<div class="site-mobile-menu site-navbar-target">
+				<div class="site-mobile-menu-header">
+					<div class="site-mobile-menu-close mt-3">
+						<span class="icon-close2 js-menu-toggle"></span>
+					</div>
+				</div>
+				<div class="site-mobile-menu-body"></div>
+			</div>
+
+
+			<div class="header-top bg-light">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-6 col-lg-3 voltereta">
+							<a href="{{ path('barco')}}">
+								<img
+								src="images/logo.png" alt="Image" class="img-fluid">
+							<!-- <strong>Water</strong>Boat -->
+							</a>
+						</div>
+						<div class="col-lg-3 d-none d-lg-block">
+
+							<div class="quick-contact-icons d-flex">
+								<div class="icon align-self-start">
+									<span class="icon-location-arrow text-primary"></span>
+								</div>
+								<div class="text">
+									<span class="h4 d-block">Marbella, Málaga</span>
+									<span class="caption-text">Puerto Deportivo Marbella</span>
+								</div>
+							</div>
+
+						</div>
+						<div class="col-lg-3 d-none d-lg-block">
+							<div class="quick-contact-icons d-flex">
+								<div class="icon align-self-start">
+									<span class="icon-phone text-primary"></span>
+								</div>
+								<div class="text">
+									<span class="h4 d-block">000 209 392 312</span>
+									<span class="caption-text">Contactanos</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-3 d-none d-lg-block">
+							<div class="quick-contact-icons d-flex">
+								<div class="icon align-self-start">
+									<span class="icon-envelope text-primary"></span>
+								</div>
+								<div class="text">
+									<span class="h4 d-block">info@gmail.com</span>
+									<span class="caption-text">Más información</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-6 d-block d-lg-none text-right">
+							<a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black">
+								<span class="icon-menu h3"></span>
+							</a>
+						</div>
+					</div>
+				</div>
 
 		<div class="site-wrap">
 
@@ -29,7 +129,7 @@
 							<div class="mx-auto">
 								<nav class="site-navigation position-relative text-right" role="navigation">
 									<ul class="site-menu main-menu js-clone-nav mr-auto d-none pl-0 d-lg-block">
-										<li class="active">
+										<li>
 											<a href="{{ path('barco')}}" class="nav-link text-left">Inicio</a>
 										</li>
 										<li>
@@ -38,7 +138,7 @@
 										<li>
 											<a href="{{ path('getreservas')}}" class="nav-link text-left">Reservas</a>
 										</li>
-										<li>
+										<li class="active">
 											<a href="{{ path('getvaloraciones')}}" class="nav-link text-left">Valoraciones</a>
 										</li>
 										<li>
@@ -70,12 +170,28 @@
 
 		</div>
 
-		<!-- END slider -->
-
-		<div class="site-section">
+		<div class="site-section bg-light">
 			<div class="container">
-				<div class="row">
-					{{form(form)}}
+				<div class="row justify-content-center mb-5">
+					<div class="col-md-7 text-center">
+						<span class="text-serif text-primary">Listado</span>
+						<h3 class="heading-92913 text-black text-center">Valoraciones</h3>
+					</div>
+				</div>
+                <div class="rower">
+					
+				</div>	
+		</div>
+		<div class="site-section bg-image overlay" style="background-image: url('images/hero_2.jpg');">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-7 text-center">
+						<h2 class="text-white">Ponte en contacto con nosotros</h2>
+						<p class="lead text-white">Contacta con nosotros en cualquier momento si tienes algún problema</p>
+						<p class="mb-0">
+							<a href="#" class="btn btn-warning py-3 px-5 text-white">Contacta con nosoros</a>
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -84,7 +200,7 @@
 		<div class="footer bg-light">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-3 voltereta">
+					<div class="col-lg-3">
 						<p class="mb-4"><img src="images/logo.png" alt="Image" class="img-fluid"></p>
 						<p>La mejor web para alquier de barcos y yates que encontrarás en Internet</p>
 						<p>

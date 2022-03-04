@@ -4,8 +4,10 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
 <script>
 	var bDates = [];
 	var dates = [];
@@ -24,6 +26,7 @@
             url: "/reservar_barco/" + {{ id }}
 		}).done(function(data){
 			fechas = JSON.parse(data)["fechas"];
+			console.log(fechas);
 			if (fechas != undefined) {
 				for(let i = 0; i < fechas.length; i++){
 					fecha_inicio = new Date(fechas[i].fecha_inicio.date);
@@ -32,28 +35,31 @@
 					
 					// populate the array
 					for (var d = new Date(fecha_inicio); d <= new Date(fecha_fin); d.setDate(d.getDate() + 1)) {
-						dateRange.push($.datepicker.formatDate('mm/dd/yy', d));
+						dateRange.push($.datepicker.formatDate('dd/mm/yy', d));
 					}
 
 					function disableDates(date) {
-						var dateString = jQuery.datepicker.formatDate('mm/dd/yy', date);
+						var dateString = jQuery.datepicker.formatDate('dd/mm/yy', date);
    						return [dateRange.indexOf(dateString) == -1];
 					}
 				}
 			}
 
 			$("#datepicker").datepicker({
-				dateFormat: 'mm/dd/yy',
+				dateFormat: 'dd/mm/yy',
 				minDate: 0, //restrict user to choose previous date
 				beforeShowDay: disableDates,
 			});
 
 			$("#datepicker").change(function(){
 					var fecha = $("#datepicker").datepicker("getDate");
-					var new_fecha =  (fecha.getMonth()+1)  + '/' + fecha.getDate()  + '/'+ fecha.getFullYear() 
+					var new_fecha = fecha.getDate()  + '/'+ (fecha.getMonth()+1)  + '/' +  fecha.getFullYear();
+
+					$('#datepicker2').datepicker('setDate', null);
+					$('#datepicker2').datepicker('destroy');
 
 					$("#datepicker2").datepicker({
-						dateFormat: 'mm/dd/yy',
+						dateFormat: 'dd/mm/yy',
 						minDate: new_fecha, 
 						beforeShowDay: disableDates,
 					});
@@ -255,6 +261,7 @@
 				<input id="pasa" class="btn btn-primary py-3 px-5" value="Crear Reserva" onclick="location.href='/getreservas';">  </input>
 			</div>
 		</div>
+		
 	</div>
 </body>
 {% endblock %}

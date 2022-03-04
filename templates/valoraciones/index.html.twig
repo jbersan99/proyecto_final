@@ -4,7 +4,60 @@
 {% endblock %}
 
 {% block body %}
-		<div class="container">
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+		<div class="site-wrap">
+
+			<div class="site-mobile-menu site-navbar-target">
+				<div class="site-mobile-menu-header">
+					<div class="site-mobile-menu-close mt-3">
+						<span class="icon-close2 js-menu-toggle"></span>
+					</div>
+				</div>
+				<div class="site-mobile-menu-body"></div>
+			</div>
+
+
+			<div class="header-top bg-light">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-6 col-lg-3 voltereta">
+							<a href="{{ path('barco')}}">
+                            {% set imagePath = 'images/logo.png' %}
+								<img
+								src="{{ asset( imagePath ) }}" alt="Image" class="img-fluid">
+							<!-- <strong>Water</strong>Boat -->
+							</a>
+						</div>
+						<div class="col-lg-3 d-none d-lg-block">
+
+							<div class="quick-contact-icons d-flex">
+								<div class="text">
+									<span class="h4 d-block">Registro <i class="fa-solid fa-registered"></i></span>
+									<span class="caption-text">Disfruta de los servicios</span>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-lg-3 d-none d-lg-block">
+							<div class="quick-contact-icons d-flex">
+								<div class="text">
+									<span class="h4 d-block">info@gmail.com <i class="fa-solid fa-paper-plane"></i></span>
+									<span class="caption-text">Más información</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 d-block d-lg-none text-right">
+							<a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black">
+								<span class="icon-menu h3"></span>
+							</a>
+						</div>
+					</div>
+                    <hr>
+				</div>
+                
+            <div class="container">
                     {{ form_start(form) }}
                     <div class="form-group col-md-3">
                         {{ form_row(form.valoracion) }}
@@ -18,7 +71,36 @@
             		{{ form_end(form) }}
 				</div>
      	</div>
+            
+
+			<div class="container">
+				<div class="row">
+					<div class="col-6">
+						<p class="mb-4"><img src="{{ asset( imagePath ) }}" alt="Image" class="img-fluid"></p>
+					</div>
+                    <div class="col-6">
+						<div class="copyright">
+							<p>
+								Copyright &copy;<script>
+									document.write(new Date().getFullYear());
+								</script>
+								All rights reserved | This template is made with
+								<i class="icon-heart text-danger" aria-hidden="true"></i>
+								by
+								<a href="https://colorlib.com" target="_blank">Jose Luis Berrio Sanchez</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+</body>
+
+
+		<div class="container">
+                    
+				</div>
+     	</div>
 
 		
 {% endblock %}
-
